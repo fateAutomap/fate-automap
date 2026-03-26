@@ -1,0 +1,375 @@
+{
+  "modules": {
+    "constants": "B08_CONSTANTS_v003",
+    "functions": "B09_FUNCTIONS_v003"
+  },
+  "tests": [
+    {
+      "group": "ATTITUDE DECODING: byte flags to human-readable encounter state",
+      "type": "bitmask decoding",
+      "note": "verify conversion from byte flags to encounter attitude (H, F+J, F)",
+      "tests": [
+        {
+          "function": "decode_att",
+          "args": [
+            1
+          ],
+          "expected": "H"
+        },
+        {
+          "function": "decode_att",
+          "args": [
+            8
+          ],
+          "expected": "F+J"
+        },
+        {
+          "function": "decode_att",
+          "args": [
+            2
+          ],
+          "expected": "F"
+        },
+        {
+          "function": "decode_att",
+          "args": [
+            0
+          ],
+          "expected": "?"
+        },
+        {
+          "function": "decode_att",
+          "args": [
+            9
+          ],
+          "expected": "H"
+        },
+        {
+          "function": "decode_att",
+          "args": [
+            255
+          ],
+          "expected": "H"
+        }
+      ]
+    },
+    {
+      "group": "COORDINATE TRANSFORMS: Wilderness Buffer to Tile",
+      "type": "linear transformation",
+      "note": "verify 120x120 buffer to 640x400 world mapping using sub_index anchors",
+      "tests": [
+        {
+          "function": "buffer_to_tile",
+          "args": [
+            40,
+            40,
+            0
+          ],
+          "expected": [
+            0,
+            0
+          ]
+        },
+        {
+          "function": "buffer_to_tile",
+          "args": [
+            40,
+            40,
+            17
+          ],
+          "expected": [
+            40,
+            40
+          ]
+        },
+        {
+          "function": "buffer_to_tile",
+          "args": [
+            50,
+            50,
+            0
+          ],
+          "expected": [
+            10,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "group": "COORDINATE TRANSFORMS: Tile to Wilderness Buffer",
+      "type": "linear transformation",
+      "note": "verify world mapping back to 120x120 local viewport positions",
+      "tests": [
+        {
+          "function": "tile_to_buffer",
+          "args": [
+            0,
+            0,
+            0
+          ],
+          "expected": [
+            40,
+            40
+          ]
+        },
+        {
+          "function": "tile_to_buffer",
+          "args": [
+            40,
+            40,
+            17
+          ],
+          "expected": [
+            40,
+            40
+          ]
+        },
+        {
+          "function": "tile_to_buffer",
+          "args": [
+            10,
+            10,
+            0
+          ],
+          "expected": [
+            50,
+            50
+          ]
+        }
+      ]
+    },
+    {
+      "group": "COORDINATE TRANSFORMS: Render Space to Buffer",
+      "type": "rendering math",
+      "note": "Verify screen pixel conversion back to 120x120 buffer coordinates (Mouse Logic).",
+      "tests": [
+        {
+          "function": "render_to_buffer",
+          "args": [
+            21,
+            819,
+            [
+              20,
+              20
+            ],
+            2,
+            2,
+            400
+          ],
+          "expected": [
+            0,
+            0
+          ]
+        },
+        {
+          "function": "render_to_buffer",
+          "args": [
+            119,
+            0,
+            [
+              0,
+              0
+            ],
+            1,
+            1,
+            120
+          ],
+          "expected": [
+            118,
+            119
+          ]
+        }
+      ]
+    },
+    {
+      "group": "WORLD LOGIC: Absolute Coordinate Anchor Mapping",
+      "type": "anchor math",
+      "note": "Verify mapping from local buffer to absolute world space via 40-unit anchors.",
+      "tests": [
+        {
+          "function": "buffer_to_world",
+          "args": [
+            40,
+            40,
+            0,
+            0
+          ],
+          "expected": [
+            0,
+            0
+          ]
+        },
+        {
+          "function": "buffer_to_world",
+          "args": [
+            40,
+            40,
+            1,
+            1
+          ],
+          "expected": [
+            40,
+            40
+          ]
+        },
+        {
+          "function": "buffer_to_world",
+          "args": [
+            80,
+            80,
+            2,
+            2
+          ],
+          "expected": [
+            120,
+            120
+          ]
+        }
+      ]
+    },
+    {
+      "group": "UI LOGIC: Encounter Color Mapping",
+      "type": "lookup table",
+      "note": "verify RGB output for different encounter types",
+      "tests": [
+        {
+          "function": "encounter_color",
+          "args": [
+            1
+          ],
+          "expected": [
+            255,
+            60,
+            60
+          ]
+        },
+        {
+          "function": "encounter_color",
+          "args": [
+            130
+          ],
+          "expected": [
+            80,
+            255,
+            120
+          ]
+        },
+        {
+          "function": "encounter_color",
+          "args": [
+            0
+          ],
+          "expected": [
+            255,
+            255,
+            80
+          ]
+        }
+      ]
+    },
+    {
+      "group": "CURSOR LOGIC: Screen position to Map Tile",
+      "type": "linear transformation",
+      "note": "Verify cursor detection for both city and wilderness scales.",
+      "tests": [
+        {
+          "function": "cursor_tile",
+          "args": [
+            20,
+            20,
+            [
+              20,
+              20
+            ],
+            2,
+            2,
+            640,
+            400
+          ],
+          "expected": [
+            0,
+            399
+          ]
+        },
+        {
+          "function": "cursor_tile",
+          "args": [
+            40,
+            40,
+            [
+              20,
+              20
+            ],
+            2,
+            2,
+            640,
+            400
+          ],
+          "expected": [
+            10,
+            389
+          ]
+        }
+      ]
+    },
+    {
+      "group": "UTILITY: File Index Incrementing",
+      "type": "file system check",
+      "note": "Verify that next_index correctly identifies the next available number for saving.",
+      "tests": [
+        {
+          "function": "next_index",
+          "args": [
+            "non_existent_prefix",
+            "txt"
+          ],
+          "expected": 1
+        }
+      ]
+    },
+    {
+      "group": "MEMORY I/O: Integration Tests (Memory Dumps)",
+      "type": "integration (dump memory file)",
+      "note": "verify that reading and parsing coordinates from a raw dump works as expected.",
+      "required": "FateAutomapV259Release.py_memdump_wild-25-376.bin",
+      "tests": [
+        {
+          "function": "read_coords",
+          "args": [
+            null
+          ],
+          "expected": [
+            25,
+            376
+          ]
+        }
+      ]
+    },
+    {
+      "group": "[EXPECTED FAIL] Buffer \u2192 Render (Pixel) Space [CHANGES WITH WINDOW SIZE]",
+      "type": "rendering variability",
+      "note": "absolute pixel outputs depend on runtime window size; retained as signal only",
+      "tests": [
+        {
+          "function": "buffer_to_render",
+          "args": [
+            0,
+            0,
+            [
+              20,
+              20
+            ],
+            2,
+            2,
+            400
+          ],
+          "expected": [
+            21,
+            819
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+word
+FateAutomapV306_memdump_001.bin<<FateAutomapV306_memdump_002.bin
+FateAutomapV306_memdump_002.bin<<FateAutomapV306_memdump_003.bin
+FateAutomapV306_memdump_003.bin<<FateAutomapV306_memdump_004.bin
+FateAutomapV306_memdump_004.bin<<FateAutomapV306_memdump_005.bin
+FateAutomapV306_memdump_005.bin<<FateAutomapV306_memdump_006.bin
+FateAutomapV306_memdump_007.bin==FateAutomapV306_memdump_008.bin
+FateAutomapV306_memdump_008.bin==FateAutomapV306_memdump_009.bin
+FateAutomapV306_memdump_010.bin>>FateAutomapV306_memdump_011.bin
+FateAutomapV306_memdump_011.bin>>FateAutomapV306_memdump_012.bin
+FateAutomapV306_memdump_012.bin>>FateAutomapV306_memdump_013.bin
+FateAutomapV306_memdump_013.bin>>FateAutomapV306_memdump_014.bin
+FateAutomapV306_memdump_014.bin>>FateAutomapV306_memdump_015.bin

@@ -1,0 +1,12 @@
+*.bin
+*.DMP
+*.pyc
+*.results
+*.zip
+console.txt
+window_pos.txt
+__pycache__/
+archive/
+data/
+memorpy/
+pyInstaller/
