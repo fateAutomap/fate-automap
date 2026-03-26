@@ -4,6 +4,8 @@
 *.results
 *.zip
 console.txt
+Fate - Shortcut.lnk
+gitupdate.bat
 window_pos.txt
 __pycache__/
 archive/
